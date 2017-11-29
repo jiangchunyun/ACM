@@ -1,0 +1,38 @@
+#include <iostream>  
+#include<stack>
+#include<algorithm>
+#include <stdio.h>  
+#include <cstring> 
+    using namespace std;  
+	int max(int a,int b)
+	{
+		if(a>=b)
+			return a;
+		else return b;
+	}
+    int main(){  
+		 int n,m,w[100],c[100],f[10000],i,j;
+		 cin>>n>>m;
+		 for( i=1;i<=n;i++)
+		 {
+		      int q;
+			 cin>>q;
+			 w[i]=q;
+		 }
+		  for( j=1;j<=n;j++)
+		  {  int q;
+			 cin>>q;
+			 c[j]=q;
+		 }
+memset(f,0,sizeof(f)); 
+for( i=1;i<=n;i++)
+{
+for( j=m;j>=w[i];j--)
+{
+//不放这个物品和放这个物品谁的价值大放选择谁的
+f[j]=max(f[j],f[j-w[i]]+c[i]);
+}
+
+} 
+cout<<f[m];
+}

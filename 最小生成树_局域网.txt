@@ -1,0 +1,47 @@
+    #include <iostream>  
+    #define MAXN 200  
+    #define inf 10000  
+    #include<stack>
+    typedef int elem_t;  
+    using namespace std;  
+      
+    elem_t prim(int n,elem_t mat[MAXN][MAXN],int* pre){  
+        elem_t min[MAXN],ret=0;  
+        int v[MAXN],i,j,k;  
+        for (i=0;i<n;i++)  
+            min[i]=inf,v[i]=0,pre[i]=-1;  
+        for (min[j=0]=0;j<n;j++){  
+            for (k=-1,i=0;i<n;i++)  
+                if (!v[i]&&(k==-1||min[i]<min[k]))  
+                    k=i;  
+                for (v[k]=1,ret+=min[k],i=0;i<n;i++)  
+                    if (!v[i]&&mat[k][i]<min[i])  
+                        min[i]=mat[pre[i]=k][i];  
+        }  
+        return ret;  
+    }  
+    int main(){  
+		int sum;
+        int n,i,j,result,q,a,b;  
+        int pre[MAXN];  
+        int distance[MAXN][MAXN];  
+		sum=0;
+        cin>>n;  
+        for (i = 0;i < n;i++)  
+            for (j = 0;j < n;j++)  
+                {  
+                    distance[i][j] = inf;  
+                }  
+         cin>>q;
+            for (i = 0;i < q;i++)  
+            {  
+				int val;
+                cin>>a>>b>>val;  
+				sum=sum+val;
+                distance[a-1][b-1] = val;  
+                distance[b-1][a-1] = val;//如果某条路已经修好，赋其权值为0  
+            }  
+            result  = prim(n,distance,pre);  
+		    cout<<sum-result;
+            return 0;  
+    }  

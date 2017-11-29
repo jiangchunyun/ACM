@@ -1,0 +1,74 @@
+必要的是建立一个结构体a[n]，v表示输入的值，order表示原i值，再用一个数组aa[n]存储离散化后的值 
+例如： 
+i：1 2 3 4 5 
+v: 9 0 1 5 4 
+排序后:0 1 4 5 9 
+order:2 3 5 4 1 如果建立映射：aa[a[i].order]=i; 
+aa:5 1 2 4 3 
+即原本的9经过排序应该在第5位，现在aa[1]=5，对应原来的9，大小次序不变，只是将9缩小到了5
+
+//求逆序数的代码
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <algorithm>
+using namespace std;
+const int maxn= 100000;
+int aa[maxn];//离散化后的数组
+int c[maxn]; //树状数组
+int n;
+
+struct Node
+{
+    int v;
+    int order;
+}a[maxn];
+
+bool cmp(Node a, Node b)
+{
+    return a.v < b.v;
+}
+
+int lowbit(int k)
+{
+    return k&(-k); //基本的lowbit函数
+}
+
+void update(int t, int value)
+{     //即一开始都为0，一个个往上加（+1），
+    int i;
+    for (i = t; i <= n; i += lowbit(i))
+        c[i] += value;
+}
+int getsum(int t)
+{  //即就是求和函数，求前面和多少就是小于它的个数
+    int i, sum = 0;
+    for (i = t; i >= 1; i -= lowbit(i))
+        sum += c[i];
+    return sum;
+}
+int main()
+{
+    int i;
+  scanf("%d", &n);
+
+        for (i = 1; i <= n; i++) //离散化
+        {
+            scanf("%d", &a[i].v);
+            a[i].order = i;
+        }
+        sort(a + 1, a + n + 1,cmp);//从1到n排序,cmp容易忘
+        memset(c, 0, sizeof(c));
+        for (i = 1; i <= n; i++)
+            aa[a[i].order] = i;
+        __int64 ans = 0;
+        for (i = 1; i <= n; i++)
+        {
+            update(aa[i], 1);
+            ans += i - getsum(aa[i]); //减去小于的数即为大于的数即为逆序数
+        }
+        printf("%I64d", ans);
+
+    return 0;
+}

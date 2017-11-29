@@ -1,0 +1,39 @@
+#include<iostream>
+#include<cstdlib>
+#include<stdio.h>
+#include<memory.h>
+#include<math.h>
+#define eps 1e-15
+using namespace std;
+double cal(double x)
+{
+    return x*x;
+}
+void cal_max(double c_high,double c_low)
+{
+    double high,low,l_mid,r_mid;
+    high=c_high;
+    low=c_low;
+    r_mid=high-(high-low)/3;
+    l_mid=low+(high-low)/3;
+    while(r_mid>l_mid)
+    {
+        cout<<low<<" "<<high<<endl;
+        if(cal(l_mid)>cal(r_mid))
+        {
+            high=r_mid;
+        }
+        else
+        {
+            low=l_mid;
+        }
+        r_mid=high-(high-low)/3;
+        l_mid=low+(high-low)/3;
+    }
+    cout<<high;
+}
+int main()
+{
+    cal_max(10.0,-11.0);
+    return 0;
+}

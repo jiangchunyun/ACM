@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include<queue>
+#include<string>
+#include<iostream>
+using namespace std;
+string a,b;
+int num_a,num_b,final_num[100001],num=0,first;
+int cal(int cal_a,int cal_b)
+{
+
+   if(cal_a==num_a-1&&cal_b==num_b-1)
+   {
+      final_num[num]=(a[cal_a]+b[cal_b]-48-48)%10;
+      if(num==num_a-1)
+       {
+         first=(a[cal_a]+b[cal_b]-48-48);
+       }
+      num++;
+      return  (a[cal_a]+b[cal_b]-48-48)/10;
+   }
+   else
+   {
+
+
+       int val=((a[cal_a]+b[cal_b]-48-48)+cal(cal_a+1,cal_b+1));
+       final_num[num]=val%10;
+       if(num==num_a-1)
+       {
+         first=val;
+       }
+       num++;
+       return val/10;
+   }
+}
+void print()
+{
+    if(first/10!=0)
+    {
+        cout<<first/10;
+    }
+    for(int i=num-1;i>=0;i--)
+    {
+        cout<<final_num[i];
+    }
+
+}
+int main() {
+    cin>>a>>b;
+    string str_c="";
+    if(a.length()<=b.length())
+    {
+        string temp;
+        temp=a;
+        a=b;
+        b=temp;
+    }
+    num_a=a.length();
+    num_b=b.length();
+    int c=num_a-num_b;
+    for(int i=0;i<c;i++)
+    {
+        str_c=str_c+"0";
+    }
+    b=str_c+b;
+    num_a=a.length();
+    num_b=b.length();
+    cal(0,0);
+    print();
+    return 0;
+}

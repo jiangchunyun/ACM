@@ -1,0 +1,41 @@
+/*多重背包是和把每个物品转换成0-1背包*/
+#include <iostream>
+#include<stack>
+#include<algorithm>
+#include <stdio.h>
+#include <cstring>
+using namespace std;
+int max(int a,int b)
+{
+		if(a>=b)
+			return a;
+		else return b;
+}
+int main(){
+		 int n,m,w[100000],v[100000],s[100000],f[100000];
+		 scanf("%d%d",&n,&m);
+		 for( int i=1;i<=n;i++)
+		 {
+             int q;
+			 scanf("%d",&q);
+			 v[i]=q;
+			 scanf("%d",&q);
+             w[i]=q;
+			 scanf("%d",&q);
+             s[i]=q;
+		 }
+         memset(f,0,sizeof(f));
+       for(int i=1;i<=n;i++)
+       {
+          for(int k=1;k<=s[i];s[i]-=k,k<<=1)
+             for(int j=m;j>=v[i]*k;j--)
+                 f[j]=max(f[j],f[j-v[i]*k]+w[i]*k);
+          if(s[i])
+          {
+              int k=s[i];
+              for(int j=m;j>=v[i]*k;j--)
+               f[j]=max(f[j],f[j-v[i]*k]+w[i]*k);
+         }
+       }
+       cout<<f[m];
+}

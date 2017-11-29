@@ -1,0 +1,40 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+	int number;
+	node *next;
+};
+node *head=NULL;
+void show()
+{
+	node *p;
+	p=head;
+	while(p)
+	{
+		cout<<p->number<<" ";
+		p=p->next;
+		cout<<endl;
+	}
+}
+int main()
+{
+	node *s,*p,*q;
+	s=new node;
+	cin>>s->number;
+	while(s->number!=0)
+	{
+		if(head==NULL)
+		{
+			head=s;
+			s->next=NULL;
+		}
+		else 
+			s->next=head;
+		head=s;
+		s=new node;
+		cin>>s->number;
+	}
+	show();
+
+}

@@ -1,0 +1,96 @@
+/*
+题目：
+Jonh正在研制一种有趣的“水杯”：
+1）底面是W x H 的相同小方格组成 (3 <= W <= 300, 3 <= H <= 300)
+2）每个小方格上放置一个底面是1x1的，高度是B(1 <= B <= 1,000,000,000)的水晶块。
+这些水晶块都粘贴在一块，之间不会漏水。
+John在制成之前，想知道他所要制的这种“水杯”能最多装多少水？
+输入：
+第一行：两个整数: W 和 H
+下面有H行：每行有W个整数。1+i行表示第i行的每个格子上的水晶块的高度。
+输出：
+只一个整数，表示最多可装水多少。1单位为：1（宽）*1（长）*1（高）
+样例输入：
+4 5
+5 8 7 7
+5 2 1 5
+7 1 7 1
+8 9 6 9
+9 8 9 9
+样例输出：
+12
+*/
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<queue>
+using namespace std;
+const int mx[5]={0,1,0,-1,0};
+const int my[5]={0,0,1,0,-1};
+
+struct node{
+    int x,y,h;
+    bool operator<(node a1)const
+    {
+        if(h==a1.h)
+        {
+            if(x==a1.x)return y>a1.y;
+            return x>a1.x;
+        }
+        return h>a1.h;
+    }
+};
+priority_queue<node>q;
+
+int m,n;
+int s[313][313];
+int z,a,b,c;
+bool p[313][313];
+
+void add(int x,int y,int h)
+{
+    int xx,yy;
+    //看上下左右的高度
+    for(int k=1;k<=4;k++)
+    {
+        xx=x+mx[k],yy=y+my[k];
+        if(xx<1||xx>m||yy<1||yy>n)continue;
+        if(!p[xx][yy])
+        {
+            q.push((node){xx,yy,s[xx][yy]});
+            p[xx][yy]=1;
+
+            if(s[x][y]>s[xx][yy])
+            {
+                int t=s[x][y]-s[xx][yy];
+                s[xx][yy]=s[x][y];
+                z+=t;
+            }
+        }
+    }
+}
+
+int main()
+{
+    scanf("%d%d",&n,&m);
+    for(a=1;a<=m;a++)
+       for(b=1;b<=n;b++)
+       {
+            scanf("%d",&s[a][b]);
+            if(a==1||b==1||a==m||b==n)
+            {
+                q.push((node){a,b,s[a][b]});
+                p[a][b]=1;
+            }
+       }
+
+    while(!q.empty())
+    {
+        node u=q.top();
+        q.pop();
+        add(u.x,u.y,u.h);
+    }
+
+    cout<<z<<'\n';
+    return 0;
+}

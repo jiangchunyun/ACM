@@ -1,0 +1,54 @@
+#include<string>
+#include<iostream>
+using namespace std;
+#include<stack>
+int main()
+{ 
+	stack<char> a;
+	string s;
+	int i;
+	cin>>s;
+	a.push(s[0]);
+	if(s[0]==']'||s[0]==')')
+		cout<<"Wrong";
+	else
+	for( i=1;i<s.size();i++)
+	{
+		
+		if(s[i]=='{'||s[i]=='['||s[i]=='(')
+				a.push(s[i]);
+		else
+		{
+			if(a.empty())
+			{
+				cout<<"Wrong";
+				break;
+			}
+			char c=a.top();
+			a.pop();
+			if(c=='{'&&s[i]!='}')
+			{
+				cout<<"Wrong";
+				break;
+			}
+			else if(c=='['&&s[i]!=']')
+			{
+				cout<<"Wrong";
+				break;
+			}
+			else if(c=='('&&s[i]!=')')
+			{
+				cout<<"Wrong";
+				break;
+			}
+		}
+		
+	}
+	
+	if(a.empty()&&i==s.size())
+		cout<<"OK";
+		
+	else if(!a.empty()&&i==s.size())
+	cout<<"Wrong";
+	
+}

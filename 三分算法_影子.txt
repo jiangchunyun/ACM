@@ -1,0 +1,55 @@
+#include<iostream>
+#include<cstdlib>
+#include<stdio.h>
+#include<memory.h>
+#include<math.h>
+#include <iomanip>
+#define eps 1e-15
+using namespace std;
+double H,h,D;
+int sgn(double a)
+{
+    return (a>eps)-(a<-eps);
+}
+double cal(double x)
+{
+    return x+(h-x)*D/(H-x);
+}
+void cal_max(double c_high,double c_low)
+{
+    double high,low,l_mid,r_mid;
+    high=c_high;
+    low=c_low;
+    r_mid=high-(high-low)/3;
+    l_mid=low+(high-low)/3;
+    while(sgn(r_mid-l_mid)>0)
+    {
+        if(cal(l_mid)>=cal(r_mid))
+        {
+            high=r_mid;
+        }
+        else
+        {
+            low=l_mid;
+        }
+        r_mid=high-(high-low)/3;
+        l_mid=low+(high-low)/3;
+    }
+    double high_x=cal(r_mid);
+    double low_x=cal(l_mid);
+    if(high_x>low_x)
+        cout << setiosflags(ios::fixed)<<setprecision(3)<<high_x<<endl;
+    else
+        cout << setiosflags(ios::fixed)<<setprecision(3)<<low_x<<endl;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    for(int i=0;i<n;i++)
+    {
+    cin>>H>>h>>D;
+    cal_max(h,0.0);
+    }
+    return 0;
+}

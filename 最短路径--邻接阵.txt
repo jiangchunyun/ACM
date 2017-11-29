@@ -1,0 +1,47 @@
+#include <iostream>
+#define MAXN 200
+#define inf 10000
+#include<stack>
+typedef int elem_t;
+using namespace std;
+int bellman_ford(int n,elem_t mat[][MAXN],int s,elem_t* min,int* pre){
+	int v[MAXN],i,j,k,tag;
+	for (i=0;i<n;i++)
+		min[i]=inf,v[i]=0,pre[i]=-1;
+	for (min[s]=0,j=0;j<n;j++){
+		for (k=-1,i=0;i<n;i++)
+			if (!v[i]&&(k==-1||min[i]<min[k]))
+				k=i;
+		for (v[k]=1,i=0;i<n;i++)
+			if (!v[i]&&mat[k][i]>=0&&min[k]+mat[k][i]<min[i])
+				min[i]=min[k]+mat[pre[i]=k][i];
+	}
+	for (tag=1,j=0;tag&&j<=n;j++)
+		for (tag=i=0;i<n;i++)
+			for (k=0;k<n;k++)
+				if (min[k]+mat[k][i]<min[i])
+					min[i]=min[k]+mat[pre[i]=k][i],tag=1;
+	return j<=n;
+}
+int main(){
+        int n,i,j,result,q,a,b,m,s,s1;
+        int pre[MAXN];
+        elem_t distance[MAXN][MAXN],min[MAXN];
+        cin>>n>>m;
+        cin>>s>>s1;
+        for (i = 0;i < n;i++)
+            for (j = 0;j < n;j++)
+                {
+                    distance[i][j] = inf;
+                }
+            for (i = 0;i < m;i++)
+            {
+				int val=1;
+                cin>>a>>b;
+                distance[a][b] = val;
+                distance[b][a] = val;//如果某条路已经修好，赋其权值为0
+            }
+            bellman_ford(n,distance,s,min,pre);
+            cout<<min[s1];
+            return 0;
+}

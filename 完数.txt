@@ -1,0 +1,29 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+    int s=1,w,n,m=0,i,j,k,t;
+    int a[100];
+    cin>>n;
+    for(i=2;i<=n;i++)
+    {
+        w=0;
+        for(j=1;j<i;j++)
+        {
+            if(i%j==0)
+            {
+                w=w+j;
+            }
+        }
+        if(i==w)
+        {
+            cout<<i<<" its factors are ";
+            for(t=1;t<i;t++)
+            {
+                if(i%t==0)
+                cout<<t<<" ";
+            }
+            cout<<endl;
+        }
+    }
+}

@@ -1,0 +1,18 @@
+//递推先写几个找找规律，最后写出表达式
+#include<iostream>
+using namespace std;
+int main()
+{
+    long long a,b,c,i,n;
+    a=b=1;
+    cin>>n;
+    if(n<3){cout<<1;return 0;}
+    for(i=3;i<=n;i++)
+    {
+    c=(a+b)%7654321;
+    a=b;
+    b=c;
+    }
+    cout<<c;
+    return 0;
+}

@@ -1,0 +1,70 @@
+/*
+堆排序算法是选择排序里的一种比较次数较小的排序算法
+*/
+#include<iostream>
+using namespace std;
+//一次归并算法
+void Merge(int r[],int r1[],int s,int m,int t)
+{
+	int i,j,k;
+	i=s;j=m+1;k=s;
+	//按大小合并成一个序列
+	while(i<=m&&j<=t)
+	{
+		if(r[i]<=r[j]) r1[k++]=r[i++];
+		else r1[k++]=r[j++];
+	}
+	//如果是第一个序列长则把剩下的补上去
+	if(i<=m)
+		while(i<=m)
+			r1[k++]=r[i++];
+		else 
+			//如果是第二个序列长，则把第二个序列补上去
+			while(j<=t)
+				r1[k++]=r[j++];
+}
+void MergePass(int r[],int r1[],int n,int h )
+{
+	int i,k;
+	i=1;
+	//将俩个长度一样的且为h的序列合并成一个序列
+	while(i<=n-2*h+1)
+	{
+		Merge(r,r1,i,i+h-1,i+2*h-1);
+		i+=2*h;
+	}
+	//只有一个序列是小于h的
+	if(i<n-h+1) Merge(r,r1,i,i+h-1,n);
+	//最后只剩下一个序列了
+	else for(k=i;k<=n;k++)
+	{
+		r1[k]=r[k];
+	}
+}
+void MergeSort1(int r[],int r1[],int n)
+{
+  int h;
+  //初始化是长度是从1开始的
+  h=1;
+  //每次的长度扩大一倍，知道最后只有一个序列
+  while(h<n)
+  {
+	  MergePass(r,r1,n,h);
+	  h=2*h;
+	  MergePass(r1,r,n,h);
+	  h=2*h;
+  }
+}
+int main()
+{
+  int r[11],r1[11],i;
+  for(i=1;i<11;i++)
+  {
+	  cin>>r[i];
+  }
+  MergeSort1(r,r1,10);
+ for(i=1;i<11;i++)
+  {
+	  cout<<r[i]<<" ";
+  }
+}

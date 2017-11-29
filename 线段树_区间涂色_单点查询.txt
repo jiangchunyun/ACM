@@ -1,0 +1,46 @@
+#include<string>
+#include<iostream>
+#include<stack>
+using namespace std;
+struct node {
+    int l, r, mid, col;
+} s[10000];
+void build(int id, int l, int r) {
+    s[id].l = l;
+    s[id].r = r;
+    s[id].col = 0;
+    s[id].mid = (l + r) / 2;
+    if(l != r) {
+        build(id * 2, l, s[id].mid);
+        build(id * 2 + 1, s[id].mid + 1, r);
+    }
+}
+
+void ins(int id, int l, int r, int col) {
+    if(l <= s[id].l && s[id].r <= r) {
+        s[id].col = col;
+        return ;
+    }
+    if(s[id].col != -1)
+        ins(id * 2, s[id].l, s[id].mid, s[id].col),
+            ins(id * 2 + 1, s[id].mid +1, s[id].r, s[id].col);
+    if(r <= s[id].mid)ins(id * 2, l, r, col);
+    else if(l > s[id].mid)ins(id * 2 + 1, l, r, col);
+    else ins(id * 2, l, r, col), ins(id * 2 + 1, l, r, col);
+    if(s[id * 2].col != s[id * 2 + 1].col)s[id].col = -1;
+    else s[id].col = s[id * 2].col;
+}
+int cal(int id, int x) {
+    if(s[id].col != -1)
+        return s[id].col;
+    else if(x <= s[id].mid)
+        return cal(id * 2, x);
+    else
+        return cal(id * 2 + 1, x);
+}
+int main() {
+    build(1, 1, 100);
+    ins(1, 1, 2, 3);
+    cout<<cal(1,3);
+
+}

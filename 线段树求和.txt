@@ -1,0 +1,53 @@
+#include<string>
+#include<iostream>
+using namespace std;
+#include<stack>
+struct node
+{
+int l,r,mid,sum;
+}s[1000];
+int a[1000];
+void build(int id,int l,int r){
+s[id].l=l;
+s[id].r=r;
+s[id].mid=(l+r)/2;
+if(l==r){
+s[id].sum=a[l];
+}
+else{
+build(id*2,l,s[id].mid);
+build(id*2+1,s[id].mid+1,r);
+s[id].sum=s[id*2].sum+s[id*2+1].sum;
+}
+}
+int cal(int id,int l,int r){
+if(l<=s[id].l&&r>=s[id].r)
+return s[id].sum;
+else if(l>s[id].mid)
+return cal(id*2+1,l,r);
+else if(r<=s[id].mid)
+return cal(id*2,l,r);
+else
+return cal(id*2+1,l,r)+cal(id*2,l,r);
+}
+void ins(int id,int x){
+if(s[id].l==s[id].r)s[id].sum=a[x];
+else if(x>s[id].mid){
+ins(id*2+1,x);
+ s[id].sum=s[id*2].sum+s[id*2+1].sum;
+}
+else{
+ins(id*2,x);
+s[id].sum=s[id*2].sum+s[id*2+1].sum;
+}
+}
+int main()
+{ 
+  a[1]=1;
+  a[2]=2;
+  build(1,1,2);
+  a[2]=1;
+  ins(1,2);
+  cout<<cal(1,1,2);
+	   
+}

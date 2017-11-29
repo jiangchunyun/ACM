@@ -1,0 +1,37 @@
+/*
+选择排序是把每一次待排序序列最小的放到开头
+*/
+#include<iostream>
+using namespace std;
+int main()
+{
+   int a[10],i,j;
+   int index;//最小的下标
+   int temp;//用于交换的数
+   for(i=0;i<10;i++)
+   {
+	   cin>>a[i];
+   }
+   //大循环只需要n-1次
+   for(i=0;i<9;i++)
+   {
+       index=i;
+	   //小循环是找到最小的下标
+	   for(j=i+1;j<10;j++)
+	   {
+		   if(a[index]>a[j])
+			   index=j;
+	   }
+	   //做交换
+	   if(index!=i)
+	   {
+          temp=a[i];
+		  a[i]=a[index];
+		  a[index]=temp;
+	   }
+   }
+   for(i=0;i<10;i++)
+   {
+	   cout<<a[i]<<" ";
+   }
+}

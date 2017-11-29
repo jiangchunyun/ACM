@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<string.h>
+#define MAX 15
+int a[MAX];
+int s[MAX];
+int vis[MAX];
+int n,t,tot;
+void dfs(int cur)
+{
+    int i,j;
+    if(cur==n)
+    {
+        tot++;
+    }
+    else
+    {
+        for(i=0;i<n;i++)
+        {
+            int ok=1;
+            a[cur]=i;
+            for(j=0;j<cur;j++)
+            {
+                if(a[cur]==a[j]||cur-a[cur]==j-a[j]||cur+a[cur]==j+a[j])
+                {
+                    ok=0;
+                    break;
+                }
+            }
+            if(ok)
+            dfs(cur+1);
+        }
+
+    }
+
+}
+int main()
+{
+    int m,j,i,k;
+    memset(a,0,sizeof(a));
+    memset(s,0,sizeof(s));
+    for(n=1;n<=10;n++)
+    {
+        tot=0;
+        dfs(0);
+        s[n]=tot;
+    }
+    while(scanf("%d",&t),t)
+    {
+        printf("%d\n",s[t]);
+    }
+
+    return 0;
+
+
+}

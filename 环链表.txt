@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+	int number;
+	node *next;
+};
+int main()
+{
+	node *head=NULL,*p,*s,*q,*tail=NULL;
+    int i,n,m;
+	cin>>n;
+	for(i=0;i<=n;i++)
+	{
+		s=new node;
+		s->number=i;
+		if(head==NULL)
+		{
+			head=tail=s;
+			tail->next=head;
+		}
+		else
+		{
+			tail->next=s;
+			tail=s;
+			tail->next=head;
+		}
+	}
+    p=tail;
+	cin>>m;
+	while(p->next!=p)
+	{
+		for(i=1;i<=m;i++)
+		{
+			q=p;
+			p=p->next;
+		}
+    q->next=p->next;
+	cout<<p->number<<" ";
+    delete p;
+	p=q;
+	}
+
+}

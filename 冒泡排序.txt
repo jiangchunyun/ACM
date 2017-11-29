@@ -1,0 +1,30 @@
+#include <iostream>
+#include <math.h>
+#include<iomanip>
+using namespace std;
+int main()
+
+{  int a[10],i,j,k,c;
+ for(i=0;i<=9;i++)
+ {
+	 cin>>a[i];
+ }
+ for(j=0;j<=8;j++)
+ {
+	 for(k=0;k<=8;k++)
+	 {
+		 if(a[k]>a[k+1])
+		 {
+			 c=a[k];
+			 a[k]=a[k+1];
+			 a[k+1]=c;
+
+		 }
+	 }
+ }
+ for(i=0;i<=9;i++)
+ {
+	 cout<<a[i]<<" ";
+ }
+}
+   

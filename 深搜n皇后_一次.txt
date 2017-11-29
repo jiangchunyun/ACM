@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+#include<string.h>
+int a[100];
+int n, number = 0;
+void dfs(int cur) {
+    if(cur == n) {
+        number++;
+    }
+    else {
+        for(int i = 0; i < n; i++) {
+            int ok=1;
+            a[cur]=i;
+            for(int j=0;j<cur;j++)
+            {
+                //如果在同行（a[cur]==a[j]），上对角（cur+a[cur]==j+a[j]），下对角（cur-a[cur]==j-a[j]）
+                if(a[cur]==a[j]||cur-a[cur]==j-a[j]||cur+a[cur]==j+a[j])
+                {
+                    ok=0;
+                    break;
+                }
+            }
+            if(ok)
+            dfs(cur+1);
+        }
+    }
+}
+int main() {
+    memset(a, 0, sizeof(a));
+    cin >> n;
+    dfs(0);
+    cout<<number;
+    return 0;
+
+
+}

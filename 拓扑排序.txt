@@ -1,0 +1,43 @@
+//拓扑排序是一个有向的表，所以不可以用无向图来实现
+#include <iostream>
+#define MAXN 200
+#define inf 0
+#include<stack>
+using namespace std;
+int toposort(int n,int mat[][MAXN],int* ret){
+	int d[MAXN],i,j,k;
+	for (i=0;i<n;i++)
+		for (d[i]=j=0;j<n;d[i]+=mat[j++][i]);
+	for (k=0;k<n;ret[k++]=i){
+		for (i=0;d[i]&&i<n;i++);
+		if (i==n)
+			return 0;
+		for (d[i]=-1,j=0;j<n;j++)
+			d[j]-=mat[i][j];
+	}
+	return 1;
+}
+int main(){
+        int n,i,j,result,q,a,b;
+        int pre[MAXN];
+        int distance[MAXN][MAXN];
+        cin>>n;
+        for (i = 0;i <= n;i++)
+            for (j =0;j <= n;j++)
+                {
+                    distance[i][j] = inf;
+                }
+        cin>>q;
+            for (i = 0;i < q;i++)
+            {
+                cin>>a>>b;
+                distance[a-1][b-1] = 1;
+            }
+            if(toposort(n,distance,pre));
+            {
+                cout<<n*100+q;
+                cout<<endl;
+            }
+
+            return 0;
+}

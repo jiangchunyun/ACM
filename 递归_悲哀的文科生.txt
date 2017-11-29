@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<string.h>
+#include<iostream>
+using namespace std;
+int n,number=0;
+void cal(int num,int sign)
+{
+    if(num==n)
+    {
+        number++;
+    }
+    else
+    {
+        if(sign==1)
+        {
+            cal(num+1,2);
+        }
+        else if(sign==2)
+        {
+            cal(num+1,1);
+            cal(num+1,3);
+        }
+        else if(sign==3)
+        {
+            cal(num+1,2);
+            cal(num+1,4);
+        }
+        else if(sign==4)
+        {
+            cal(num+1,3);
+        }
+    }
+}
+int main()
+{
+
+        cin>>n;
+        cal(1,1);
+        cout<<number;
+        return 0;
+}

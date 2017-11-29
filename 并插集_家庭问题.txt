@@ -1,0 +1,48 @@
+#include <stdio.h>
+#define maxn 101
+int f[maxn],fl[maxn];
+int find(int x)
+{
+    if (!f[x]) return x;
+    f[x]=find(f[x]);
+    return f[x];
+}
+int insert(int x,int y)
+{
+    if (find(x)!=find(y))
+    {
+        f[find(x)]=find(y);
+        return 1;
+    }
+    return 0;
+}
+int main()
+{
+    int n,m;
+    scanf("%d%d",&n,&m);
+    for (int i=1;i<=m;i++)
+    {
+        int x,y;
+        scanf("%d%d",&x,&y);
+        insert(x,y);
+    }
+    int ans=0;
+    for (int i=1;i<=n;i++) find(i);
+    for (int i=1;i<=n;i++)
+    {
+        if (f[i]==0) f[i]=i;
+        if (fl[f[i]]==0) ans++;
+        fl[f[i]]++;
+    }
+    int t=0;
+    for (int i=1;i<=n;i++)
+        if (fl[i]>t) t=fl[i];
+    printf("%d %d\n",ans,t);
+}
+
+
+
+
+
+
+

@@ -1,0 +1,70 @@
+/*二叉树的建立*/
+#include<iostream>
+using namespace std;
+class node
+{
+public:
+   char date;
+   node *left;
+   node *right;
+};
+node * create(node *head)
+{
+  char ch;
+  cin>>ch;
+  if(ch=='#') head=NULL;
+  else 
+  {
+	  head=new node;
+	  head->date=ch;
+	  head->left=create(head->left);
+	  head->right=create(head->right);
+  }
+  return head;
+}
+//二叉树的前序遍历
+void tree_first(node *head)
+{
+	if(head==NULL) return;
+	else
+	{
+		cout<<head->date;
+		tree_first(head->left);
+		tree_first(head->right);
+
+	}
+}
+//二叉树的中序遍历
+void tree_middle(node *head)
+{
+	if(head==NULL) return;
+	else
+	{
+		
+		tree_middle(head->left);
+		cout<<head->date;
+		tree_middle(head->right);
+
+	}
+}
+//二叉树的后序遍历
+void tree_behind(node *head)
+{
+	if(head==NULL) return;
+	else
+	{
+		
+		tree_behind(head->left);
+		tree_behind(head->right);
+		cout<<head->date;
+
+	}
+}
+node *head;
+int main()
+{ 
+	node *p;
+  	p=create(head);
+	tree_behind(p);
+
+}

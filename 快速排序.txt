@@ -1,0 +1,59 @@
+#include<iostream>
+using namespace std;
+int parttion(int r[],int first,int end)
+{
+   int 	i=first;//头
+   int  j=end;//末尾
+   int  temp;//交换
+   //一次排序找到以第一个数为中间点左右分开
+   while(i<j)
+   {
+	   //找到比第一个数大的直到比他小或者排序结束
+	   while(i<j&&r[i]<=r[j]) j--;
+	   if(i<j)
+	   {
+		temp=r[i];
+	    r[i]=r[j];
+		r[j]=temp;
+	   }
+	   //找到比第一个数小的直到比他大或者排序结束
+	   while(i<j&&r[i]<=r[j]) i++;
+	   if(i<j)
+	   {
+		temp=r[i];
+	    r[i]=r[j];
+		r[j]=temp;
+	   }
+   }
+   //i是分割点，左边的比它小右边的比它大
+   return i;
+
+}
+void Quicksort(int r[],int first,int end)
+{
+	int pivot;
+	//递归的结束条件是first>=end
+	if(first<end)
+	{
+      pivot=parttion(r,first,end);
+	  //对前面一半进行再次快速排序
+	  Quicksort(r,first,pivot-1);
+	  //对后面一次进行再次快速排序
+	  Quicksort(r,pivot+1,end);
+
+	}
+}
+int main()
+{
+	int r[10],i;
+	for( i=0;i<10;i++)
+	{
+		cin>>r[i];
+	}
+	Quicksort(r,0,9);
+	for( i=0;i<10;i++)
+	{
+		cout<<r[i]<<" ";
+	}
+
+}

@@ -1,0 +1,22 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int a[100],i=0,n,j,t,s=0,q;
+	cin>>n;
+	q=n;
+    while(q!=0)
+	{
+		a[i]=q%10;
+		q=q/10;
+		i++;
+	}
+	for(j=0;j<i/2;j++)
+	{
+		if(a[j]==a[i-j-1])
+			s++;
+	}
+	if(i/2==s)
+		cout<<n;
+
+}

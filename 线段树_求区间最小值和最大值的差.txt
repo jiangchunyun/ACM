@@ -1,0 +1,144 @@
+问题描述：
+每天,农夫 John 的N(1 <= N <= 50,000)头牛总是按同一序列排队. 有一天, John
+决定让一些牛们玩一场飞盘比赛. 他准备找一群在对列中为置连续的牛来进行比赛.
+但是为了避免水平悬殊,牛的身高不应该相差太大.
+ 
+John 准备了Q (1 <= Q <= 180,000) 个可能的牛的选择和所有牛的身高 (1 <=
+身高 <= 1,000,000). 他想知道每一组里面最高和最低的牛的身高差别.
+ 
+注意: 在最大数据上, 输入和输出将占用大部分运行时间.
+输入：
+第一行: N 和 Q.
+ 
+第2..N+1行: 第i+1行是第i头牛的身高.
+ 
+第N+2..N+Q+1行: 两个整数, A 和 B (1 <= A <= B <= N), 表示从A到B的
+所有牛.
+输出：
+第1..Q行: 所有询问的回答 (最高和最低的牛的身高差), 每行一个.
+样例输入：
+6 3
+1
+7
+3
+4
+2
+5
+1 5
+4 6
+2 2
+样例输出：
+6
+3
+0
+#include<string>
+#include<iostream>
+using namespace std;
+#include<stack>
+struct node
+{
+int l,r,mid,sum;
+}s[1000],s1[1000];
+int a[1000];
+int min(int a,int b)
+{
+        if(a<=b)
+            return a;
+        else
+            return b;
+}
+int max(int a,int b)
+{
+        if(a>=b)
+            return a;
+        else
+            return b;
+}
+void build(int id,int l,int r){
+s[id].l=l;
+s[id].r=r;
+s[id].mid=(l+r)/2;
+if(l==r){
+s[id].sum=a[l];
+}
+else{
+build(id*2,l,s[id].mid);
+build(id*2+1,s[id].mid+1,r);
+s[id].sum=max(s[id*2].sum,s[id*2+1].sum);
+}
+}
+int cal(int id,int l,int r){
+if(l<=s[id].l&&r>=s[id].r)
+return s[id].sum;
+else if(l>s[id].mid)
+return cal(id*2+1,l,r);
+else if(r<=s[id].mid)
+return cal(id*2,l,r);
+else
+return max(cal(id*2+1,l,r),cal(id*2,l,r));
+}
+void ins(int id,int x){
+if(s[id].l==s[id].r)s[id].sum=a[x];
+else if(x>s[id].mid){
+ins(id*2+1,x);
+ s[id].sum=max(s[id*2].sum,s[id*2+1].sum);
+}
+else{
+ins(id*2,x);
+s[id].sum=max(s[id*2].sum,s[id*2+1].sum);
+}
+}
+//算最小的
+void buildmin(int id,int l,int r){
+s1[id].l=l;
+s1[id].r=r;
+s1[id].mid=(l+r)/2;
+if(l==r){
+s1[id].sum=a[l];
+}
+else{
+buildmin(id*2,l,s1[id].mid);
+buildmin(id*2+1,s1[id].mid+1,r);
+s1[id].sum=min(s1[id*2].sum,s1[id*2+1].sum);
+}
+}
+int calmin(int id,int l,int r){
+if(l<=s1[id].l&&r>=s1[id].r)
+return s1[id].sum;
+else if(l>s1[id].mid)
+return calmin(id*2+1,l,r);
+else if(r<=s1[id].mid)
+return calmin(id*2,l,r);
+else
+return min(calmin(id*2+1,l,r),calmin(id*2,l,r));
+}
+void insmin(int id,int x){
+if(s1[id].l==s1[id].r)s1[id].sum=a[x];
+else if(x>s1[id].mid){
+insmin(id*2+1,x);
+ s1[id].sum=min(s1[id*2].sum,s1[id*2+1].sum);
+}
+else{
+insmin(id*2,x);
+s1[id].sum=min(s1[id*2].sum,s1[id*2+1].sum);
+}
+}
+int main()
+{
+  int n,m;
+  cin>>n>>m;
+  for(int i=1;i<=n;i++)
+  {
+      cin>>a[i];
+  }
+  build(1,1,n);
+  buildmin(1,1,n);
+  for(int i=1;i<=m;i++)
+  {
+      int l,r;
+      cin>>l>>r;
+      cout<<cal(1,l,r)-calmin(1,l,r)<<endl;
+  }
+
+
+}

@@ -1,0 +1,35 @@
+#include<iostream>
+#include<stack>
+#include<algorithm>
+#include<stdio.h>
+#include<cstring>
+#include<vector>
+using namespace std;
+int n, sum = 0;
+int p[100], a[100];
+void dfs(int m, int k) {
+    if(m > n) {
+        sum++;
+        if(sum == k) {
+            for(int k = 1; k <= n; k++) {
+                cout << p[k] << " ";
+            }
+        }
+    }
+
+    for(int i = 1; i <= n; i++) {
+        if(a[i] == 0) {
+            a[i] = 1;
+            p[m] = i;
+            dfs(m + 1, k);
+            a[i] = 0;
+        }
+    }
+
+}
+int main() {
+    int k;
+    cin >> n >> k;
+    dfs(1, k);
+    return 0;
+}

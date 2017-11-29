@@ -1,0 +1,16 @@
+#include <iostream>
+#include <math.h>
+#include<iomanip>
+using namespace std;
+int main()
+
+{  int n,i,a,sn,j,sn1=0;
+  cin>>n;
+  for(i=1;i<=n;i++)
+  {sn=1;
+	  for(j=1;j<=i;j++)
+	  {
+		 sn=sn*j;
+	  }sn1=sn1+sn;
+  }cout<<sn1;
+}

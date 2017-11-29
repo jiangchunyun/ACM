@@ -1,0 +1,31 @@
+/*完全背包是和0-1背包差不多的只不过它的状态转换不一样 f[j]=max(f[j],f[j-w[i]]+w[i]);*/
+#include <iostream>
+#include<stack>
+#include<algorithm>
+#include <stdio.h>
+#include <cstring>
+using namespace std;
+int max(int a,int b)
+{
+		if(a>=b)
+			return a;
+		else return b;
+}
+int main(){
+		 int n,m,w[100000],f[100000],i,j;
+		 scanf("%d%d",&n,&m);
+
+		 for( i=1;i<=n;i++)
+		 {
+		      int q;
+			 scanf("%d",&q);
+			 w[i]=q;
+		 }
+         memset(f,0,sizeof(f));
+         for( i=1;i<=n;i++)
+         for( j=w[i];j<=m;j++)
+             f[j]=max(f[j],f[j-w[i]]+w[i]);
+               cout<<f[m];
+}
+
+

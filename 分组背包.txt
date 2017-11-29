@@ -1,0 +1,42 @@
+/*分组背包是多一个for循环，对每一组的每一个都比较一遍*/
+#include <iostream>
+#include<stack>
+#include<algorithm>
+#include <stdio.h>
+#include <cstring>
+using namespace std;
+int max(int a,int b)
+	{
+		if(a>=b)
+			return a;
+		else return b;
+	}
+int main(){
+         int n,m,w[1001][3],c[1001][3],f[10001],i,j,k;
+         scanf("%d%d",&n,&m);
+		 for( i=1;i<=n;i++)
+		 {
+
+             scanf("%d",&w[i][1]);
+             scanf("%d",&c[i][1]);
+             scanf("%d",&w[i][2]);
+             scanf("%d",&c[i][2]);
+
+		 }
+memset(f,0,sizeof(f));
+for( i=1;i<=n;i++)
+{
+for( j=m;j>0;j--)
+{
+for(k=0;k<=2;k++)
+{
+if(j<w[i][k])
+{continue;}
+f[j]=max(f[j],f[j-w[i][k]]+c[i][k]);
+}
+
+}
+}
+printf("%d",f[m]);
+
+}

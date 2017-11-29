@@ -1,0 +1,184 @@
+#include<iostream>
+#include<string>
+#include<iomanip>
+using namespace std;
+class tree
+{
+public:
+	int power;
+	int value;
+	int type;
+	int parent, leftChild, rightChild; 
+	int size;
+	char ch;
+	string s;
+	tree *next;
+	tree()
+	{
+		power=1;
+		type=0;
+    	parent=-1;
+	    leftChild=-1;
+		rightChild=-1;
+	}
+public:
+	string Reserve(string str)
+	{
+	int i, n, k;
+	string s;
+	char arry[100];
+	n = str.size();
+	for (k = n - 1, i = 0;i<n;i++, k--)
+	{
+		arry[i] = str[k];
+	}
+	arry[i] = '\0';
+	str = arry;
+	return str;
+	}
+};
+tree *head,a[100000];
+int m=0,width,height;
+void power(int m,int n)
+{
+	int i,value;
+	width=m;
+	height=n;
+	tree *s,*p,*q,*e;
+	head=new tree;
+	p=head;
+	for(i=0;i<m*n;i++)
+	{
+      cin>>value;
+      s=new tree;
+	  s->value=value;
+	  p->next=s;
+	  p=s;
+	         
+	}
+	p->next=NULL;
+	p=head->next;
+    while(p)
+	{
+		e=p;
+		q=p->next;
+		while(q)
+		{
+
+           if(q->value==p->value)
+		   {
+			   p->power++;
+			   e->next=q->next;
+			   q=e->next;
+		   }
+		   else
+		   {
+		   e=q;
+		   q=q->next;
+		   }
+		}
+		p=p->next;
+	}
+}
+void SelectMins(int i, int &s, int &t,tree *a) 
+{
+
+	int min,min2;
+    min = min2 =100000; 
+    s = t = -1; 
+	 for(int j=0;j<i;j++)
+	 {
+		 if(a[j].type==0)
+		 {
+            if(a[j].power<=min)
+			{
+				min=a[j].power;
+				s=j;
+			}
+			
+		 }
+	 }
+	  a[s].type=1;
+     for( j=0;j<i;j++)
+	 {
+		  if(a[j].type==0)
+		  {
+
+            if(min2>=a[j].power)
+			{
+				min2=a[j].power;
+			 t=j;
+			}
+		  }
+	 }
+	 a[t].type=1;
+ }
+void create_Huffman()
+{
+   tree *p,c;
+   int i=0,min,min2,p1,q;
+   m=0;
+   p=head->next;
+   while(p)
+   {
+	   a[i]=*p;
+	   p=p->next;
+	   i++;
+	   m++;
+   }
+   for(i=m;i<2*m-1;i++)
+   {
+      SelectMins(i, min, min2, a); 
+	  a[min].parent=i;
+	  a[min2].parent=i;
+	  a[i].leftChild=min;
+	  a[i].rightChild=min2;
+	  a[i].power= a[min].power+a[min2].power;
+   }
+   
+   for (int k=0; k<m; k++) 
+   {   char o[20];
+       int u=0;
+	   p1=k;
+	   while ((q=a[p1].parent)!=-1)
+	   {
+		   if(a[q]. leftChild ==p1)
+		   {
+			   o[u]='0';
+			   u++;
+		   }
+		   else 
+		   {
+               o[u]='1';
+			   u++;
+		   }
+			   p1=q; 
+	   } 
+	   a[k].size=u;
+   }
+
+}
+int main()
+{
+	int kk,b;
+	double add=0;
+	while(cin>>kk>>b)
+	{
+		if(b==0)
+		{
+			break;
+		}
+		else
+		{
+    	power(kk,b);
+        create_Huffman();
+	    add=0;
+    	for(int i=0;i<m;i++)
+		{
+	      add=add+a[i].power*a[i].size;
+		}
+          add=width*height*8/add;
+          cout << "Huffman±àÂëµÄÑ¹Ëõ±ÈÎª" <<setiosflags(ios::fixed) << setprecision(2) <<add <<":"<<"1"<<endl;
+		}
+	}
+}

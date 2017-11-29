@@ -1,0 +1,23 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int i,j,h=0;
+	   cin>>i;
+		for(j=2;j<=i;j++)
+		{
+			if(i%j==0)
+			{
+				h++;
+			}
+		}
+		if(h<=1)
+		{
+				cout<<1<<endl;
+		}
+		else
+		{
+			     cout<<0<<endl;
+		}
+	return 0;
+}

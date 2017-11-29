@@ -1,0 +1,58 @@
+/*
+堆排序算法是选择排序里的一种比较次数较小的排序算法
+*/
+#include<iostream>
+using namespace std;
+//调整堆
+void Sift(int r[],int k,int m)
+{
+	int i,j,temp;
+	i=k;j=2*i;
+	while(j<=m)
+	{   
+		//挑出来孩子节点中较大的节点
+		if(j<m&&r[j]<r[j+1])j++;
+		if(r[i]>r[j])break;
+		//如果父节点小于子节点中较大的调整以后继续向下比较
+		else
+		{
+         temp=r[i];
+		 r[i]=r[j];
+		 r[j]=temp;
+		 i=j;
+		 j=2*i;
+		}
+	}
+}
+void HeapSort(int r[],int n)
+{
+	int i,j,temp;
+	//从最后一个节点的父节点开始建立一个堆
+	for(i=n/2;i>=1;i--)
+	{
+		Sift(r,i,n);
+	}
+	//每次取出最大的数然后再调整
+	for(i=1;i<n;i++)
+	{
+		temp=r[1];
+		r[1]=r[n-i+1];
+		r[n-i+1]=temp;
+		Sift(r,1,n-i);
+	}
+}
+int main()
+{
+  int r[11],i;
+  for(i=1;i<11;i++)
+  {
+	  cin>>r[i];
+  }
+  HeapSort(r,10);
+  for(i=1;i<11;i++)
+  {
+	  cout<<r[i]<<" ";
+  }
+
+
+}

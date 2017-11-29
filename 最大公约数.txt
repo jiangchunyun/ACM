@@ -1,0 +1,15 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int m,n,c=1;
+	cin>>m>>n;
+	if(m>n)
+	{while(c!=0){c=m%n;m=n;n=c;}
+	cout<<m;
+	}
+	else
+    {while(c!=0){c=n%m;n=m;m=c;}
+	cout<<n;}
+	return 0;
+}

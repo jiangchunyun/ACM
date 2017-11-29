@@ -1,0 +1,41 @@
+//vector的插入   vector <int>::iterator theIterator = nums.begin()+i-1;
+//               nums.insert(theIterator, 1, nums.at(size_nums - 1));、、
+//删除具体位置   vector <int>::iterator theIterator_1 = nums.end()-1;
+//               nums.erase(theIterator_1);
+    }
+#include<iostream>
+#include<stack>
+#include<algorithm>
+#include<stdio.h>
+#include<cstring>
+#include<vector>
+using namespace std;
+void wiggleSort(vector<int> &nums) {
+    // write your code here
+    int size_nums = nums.size();
+    sort(nums.begin(), nums.end());
+
+    for(int i = 2; i < size_nums; i = i + 2) {
+        vector <int>::iterator theIterator = nums.begin()+i-1;
+        nums.insert(theIterator, 1, nums.at(size_nums - 1));
+        vector <int>::iterator theIterator_1 = nums.end()-1;
+        nums.erase(theIterator_1);
+    }
+
+}
+int main() {
+    vector<int> a;
+    int n;
+    cin >> n;
+    for(int i = 0; i < n; i++) {
+        int val;
+        cin >> val;
+        a.push_back(val);
+    }
+    wiggleSort(a);
+    for(int i = 0; i < n; i++) {
+        cout << a.at(i) << " ";
+    }
+    cout<<"size:"<<a.size()<<endl;
+    return 0;
+}

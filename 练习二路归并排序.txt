@@ -1,0 +1,84 @@
+#include<iostream>
+#include<stack>
+#include<algorithm>
+#include<stdio.h>
+#include<cstring>
+#include<vector>
+using namespace std;
+//将俩个排序好的数组合并成一个
+void Merge_r_r1(int r[], int r1[], int s, int m, int t) {
+    int i = s;
+    int j = m + 1;
+    int k = s;
+    while(i <= m && j <= t) {
+        if(r[i] <= r[j]) {
+            r1[k++] = r[i++];
+        }
+        else {
+            r1[k++] = r[j++];
+        }
+    }
+    //当i>m时候这种情况是第二个数组长与第一个数组
+    if(i>m)
+    {
+        while(j<=t)
+        {
+            r1[k++]=r[j++];
+        }
+    }
+    //当j大于t的时候则是第一个数组的长度大于第二个数组的长度
+    if(j>t)
+    {
+        while(i<=m)
+        {
+            r1[k++]=r[i++];
+        }
+    }
+}
+void Merge_Pass(int r[],int r1[],int n,int h)
+{
+    int i=0;
+    while(i<=n-2*h+1)
+    {
+        Merge_r_r1(r,r1,i,i+h-1,i+2*h-1);//-1原因是每次的下一次的第一个是i+2*h
+        i=i+2*h;
+    }
+    if(i<=n-h)
+    {
+        Merge_r_r1(r,r1,i,i+h-1,n);
+    }
+    else
+    {
+       for(int j=i;j<=n;j++)
+       {
+          r1[j]=r[j];
+       }
+    }
+}
+void Merge_sort(int r[],int r1[],int n)
+{
+    int h=1;
+    while(h<n+1)
+    {
+        Merge_Pass(r,r1,n,h);
+        h=2*h;
+        Merge_Pass(r1,r,n,h);
+        h=2*h;
+    }
+}
+int main() {
+    int a[100];
+    int b[100];
+    int n;
+    cin>>n;
+    for(int i=0;i<n;i++)
+    {
+        cin>>a[i];
+    }
+    Merge_sort(a,b,n-1);
+    for(int j=0;j<n;j++)
+    {
+        cout<<a[j]<<" ";
+    }
+    return 0;
+}
